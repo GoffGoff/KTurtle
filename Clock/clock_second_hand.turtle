@@ -1,4 +1,28 @@
 kturtle-script-v1.0
+#Learning project "Clock" with KTurtle
+
+#KTurtle is an educational programming environment for turtle graphics. KTurtle has a built-in programming language that is loosely based on the Logo programming language. It includes some basic elements, like variables, loops, ifs, includes some functions like sin or mod, and commands to control the turtle. It does not support arrays. The KTurtle language and IDE are limited to teaching programming using turtle graphics, and is not intended for other applications. 
+
+#===================================
+#Learning  animation, loops, nested loops, subroutines, unorthodox approach
+#===================================
+
+# clock_second_hand.turtle
+# v. 1.0 
+
+#Run sample with maximal speed
+
+# First keypoint of this learning project is animation and unorthodox approach to unusual goals. Repeated canvas clearing and drawing a new shapes makes an illusion of animated object. Animated projects are unusual for KTurtle.
+
+# But main keypoint is nested loops (hours, minutes, seconds)
+
+# Another keypoint is subroutines. 
+
+#This version "Second hand" difference from "Studio style" in complicity and smoothness. This version implements hour, minute AND second hands. Clock face need to be renewed every second. This version runs not so smooth on slow machines.
+
+# "POLJOT" is a brand of Soviet/Russian wristwatches and chronometers, produced since 1964 by the First Moscow Watch Factory. My mom worked there for decades. Poljot produced numerous historical watches, including the world's first space watch worn by Yuri Gagarin.
+
+
 @(reset)
 
 @(canvassize) 300@(,)300
@@ -7,46 +31,52 @@ kturtle-script-v1.0
 
 @(penup)
 
-@(learn) machstrich $Direction@(,) $Start@(,) $Length@(,) $Width@(,) $R@(,)$G@(,)$B {
-  @(go) 150@(,)150
+$StartH=10 # Initial position, hours
+$StartM=10 # Initial position, minutes
+
+@(learn) DrawLine $Direction@(,) $Start@(,) $Length@(,) $Width@(,) $R@(,)$G@(,)$B { #Subroutine draws a line from canvas center with given parameters. Universal subroutine. Variable names are self explaining, RGBs are for color.
+  @(center)
   @(direction) $Direction
-  @(pencolor) $R@(,)$G@(,)$B
-  @(penwidth) $Width
   @(forward) $Start
+  @(penwidth) $Width
+  @(pencolor) $R@(,)$G@(,)$B
   @(pendown)
   @(forward) $Length
   @(penup)
 }
 
+# ---------------------------------
 
-
-$StartH=10
-$StartM=10
-
-
-
+# main
 
 @(while) @(true) {
 
-  @(for) $Hour=$StartH @(to) 11 {
-    @(for) $Min=$StartM @(to) 59 {
-      @(for) $Sec=0 @(to) 59 {
+  @(for) $Hour=$StartH @(to) 11 { # Hour's loop
+    @(for) $Min=$StartM @(to) 59 { # Minute's loop
+      @(for) $Sec=0 @(to) 59 { # Second's loop
 
-        @(clear)
+        @(clear) # clearing canvas
 
-        #Uhrenmarke
+        #POLJOT trade mark
         @(go) 125@(,)180
         @(direction) 0
         @(pencolor) 20@(,)20@(,)20
-         @(print) "POLJOT"
+        @(print) "POLJOT"
 
+        # Make fast and simple clock face
         @(for) $A=0 @(to) 330 @(step) 30 {
-          machstrich $A@(,) 100@(,) 20@(,) 2@(,) 180@(,)180@(,)180
+          DrawLine $A@(,) 100@(,) 20@(,) 3@(,) 30@(,)30@(,)30
         }
-        machstrich $Hour*30+$Min/2@(,) -5@(,) 70@(,) 8@(,) 160@(,)160@(,)160
-        machstrich $Min*6+$Sec/10@(,) -10@(,) 110@(,) 4@(,) 110@(,)110@(,)110
-        machstrich $Sec*6@(,) -20@(,) 145@(,) 2@(,) 255@(,) 0@(,) 0
-      @(wait) 1
+        
+        # Draw hour hand, see formel for direction
+        DrawLine $Hour*30+$Min/2@(,) -5@(,) 70@(,) 8@(,) 160@(,)160@(,)160
+
+        # Draw minute hand, see formel for direction
+        DrawLine $Min*6+$Sec/10@(,) -10@(,) 110@(,) 4@(,) 110@(,)110@(,)110
+
+        #Draw second hand
+        DrawLine $Sec*6@(,) -20@(,) 145@(,) 2@(,) 255@(,) 0@(,) 0
+        @(wait) 0.99999 # Wait 0.99999 sec for precize run
       }
     }
     $StartM = 0   
