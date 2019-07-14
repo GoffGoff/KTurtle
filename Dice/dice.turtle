@@ -1,28 +1,34 @@
 kturtle-script-v1.0
 #Learning project "Dice" with KTurtle
+
+#KTurtle is an educational programming environment for turtle graphics. KTurtle has a built-in programming language that is loosely based on the Logo programming language. It includes some basic elements, like variables, loops, ifs, includes some functions like sin or mod, and commands to control the turtle. It does not support arrays. The KTurtle language and IDE are limited to teaching programming using turtle graphics, and is not intended for other applications. 
+
+#===================================
 #Learning subroutines, cascading subroutines, functions, cascading functions and advanced using of loops
 #Learning interactivity
+#===================================
 
+#Playing Yahtzee (Kniffel) with virtual dices
 
-#Plaing Yahtzee with virtual dices
+#Player starts program and rolls five dices. After it he has two attempts to reroll particular dices (from none to all five) to achieve a better combination of them.
 
-#Player rolls five dices. After that he has two another attempts to reroll particular dices (from none to all five) to achieve a better combination of them.
+#To reroll particular dices player gives a number, where each digit represents a dice to reroll. "253" means to reroll dices 2, 5 and 3.
 
-#One player runs a program and attempts to achieve best possible result. When his turn is over, next player starts programm again.
+#Player runs a program and attempts to achieve best possible result. When his turn is over, next player starts programm.
 
-#Dice values are represented with variables from $D1 to $D5
+#Dice values are stored in variables from $D1 to $D5
 
 @(reset)
 @(canvassize) 500@(,)100
 @(spritehide)
 @(penwidth) 2
 
+#In KTurtle subs and functions has to be put first, before main
 
-# This subroutine draws set of five dices.
-@(learn) drawdices {
+@(learn) drawdices { # This subroutine draws a set of all five dices.
   @(clear)
   @(go) 50@(,)50
-  drawdice $D1 # (cascading subroutines)
+  drawdice $D1
   @(go) 150@(,)50
   drawdice $D2
   @(go) 250@(,)50
@@ -33,12 +39,11 @@ kturtle-script-v1.0
   drawdice $D5
 }
 
-#This subroutine draws one particular dice with points (given argument) 
-@(learn) drawdice $Z {
+@(learn) drawdice $Z { #This subroutine draws one particular dice with value $Z
   $X = @(getx)
   $Y = @(gety)
 
-#Draw dice
+#Drawing dice's border
   @(goy) $Y-26.4
   @(direction) 90
   @(repeat) 4 {
@@ -50,10 +55,10 @@ kturtle-script-v1.0
     @(forward) 20
   }
 
-#Draw points on dice
+#Drawing point marks (small circles) on dice
   @(if) $Z==1 {
     @(go) $X@(,)$Y
-    drawcircle  # (cascading subroutines)
+    drawcircle
     @(return)
   }
   @(if) $Z==2 {
@@ -112,8 +117,7 @@ kturtle-script-v1.0
   }
 }
 
-#This subroutine draws one point on dice
-@(learn) drawcircle {
+@(learn) drawcircle { #This subroutine draws small circle (point mark on a dice)
   @(penup)
   @(forward) 3
   @(pendown)
@@ -125,20 +129,15 @@ kturtle-script-v1.0
   }
 }
 
-#This function gives integer value back
-@(learn) integer $Z {
-  $Zr = @(round) $Z
-  @(if) $Z < $Zr {
-    $Z = $Zr-1
-    }
-    @(else) {
-      $Z = $Zr
+@(learn) integer $Z { #This function gives integer value back. KTurtle has integrated function "round" and we use it to calc integer
+  $Zi = @(round) $Z
+  @(if) $Z < $Zi {
+    $Zi = $Zi-1
   }
-  @(return) $Z
+  @(return) $Zi
 }
 
-#This subroutine calculates new value for particular, given as argument, dice
-@(learn) rerolldice $rrd {
+@(learn) rerolldice $rrd { #This subroutine calculates new value for rerolled dice
   @(if) $rrd==1 {
     $D1 = integer @(random) 1@(,)6.999999
     @(return)
@@ -161,12 +160,11 @@ kturtle-script-v1.0
   }
 }
 
-
-
-#And here we go :-)
 #-------------------------
 
-#Initial calculation of a first roll attempt for a set of dices. Cascading functions.
+# main
+
+#Initial calculation of a first roll attempt for a set of dices. 
   $D1 = integer @(random) 1@(,)6.999999
   $D2 = integer @(random) 1@(,)6.999999
   $D3 = integer @(random) 1@(,)6.999999
@@ -174,38 +172,34 @@ kturtle-script-v1.0
   $D5 = integer @(random) 1@(,)6.999999
 
   @(canvascolor) 230@(,)255@(,)230 #First attempt on green background
-
   drawdices 
 
-#-------------------------
+# Player has 2 attempts to achieve better combination. Loop runs twice.
+@(for) $AttemptsLeft=2 @(to) 1 @(step) -1 {
 
-# Next attempts realized in loop. $left represents, how many attempts left. You may change a number of given attempts here. Original rules gives 2 attempts
-@(for) $left=2 @(to) 1 @(step) -1 {
+# Let player checks dices, wait 5 sec after 1st attempt, 2 sec after 2nd
+  @(wait) $AttemptsLeft*3-1
 
-# Wait a litle bit before asking, f.e. 5 sec after 1st attempt, 2 sec after 2nd.
-  @(wait) $left*3-1
-
-#interaction
+#interaction. !!!There is a bug in KTurtle at the moment, message appears at wrong place!!!
   $ReRoll = @(ask) "Wich dices you like to reroll? (give just numbers, f.e. 253 rerolls second, fifth and third dices. If you like to stay with actual set, just give 0 or close this popup window)"
-  @(if) $ReRoll == "" @(or) $ReRoll == 0 {
-    @(break) # If given value is empty - then break the loop, this turn is over
-  }
-# Calculating of dices to reroll. If given value is 153, then points on first, fifth and third dices have to be recalculated. Given value will be divided to 10*x in approaching steps and integer value will be taken. Unvalid values are ignored.
-  $div=10000
-  @(repeat) 5 {
-    $ReRollDice = integer $ReRoll/$div
-    @(if) $ReRollDice > 0 @(and) $ReRollDice <= 5 { 
-      rerolldice $ReRollDice
-    }
-    $ReRoll=$ReRoll-$ReRollDice*$div
-    $div=$div/10
-  }
-  @(canvascolor) 255@(,)255@(,)230 #yellow background
 
+  @(if) $ReRoll == "" @(or) $ReRoll <= 0 @(or) $ReRoll > 54321 { # If input is empty or invalid - break the loop, turn is over
+    @(break) 
+  }
+
+  $ReRoll = integer $ReRoll # If not integer is given
+
+#Now we reroll dices, extracting digits from given number
+  @(while) $ReRoll > 0 {
+    rerolldice @(mod) $ReRoll@(,)10
+    $ReRoll =  integer $ReRoll/10
+  }
+
+  @(canvascolor) 255@(,)255@(,)230 #yellow background
   drawdices
 
 }
 @(canvascolor) 255@(,)230@(,)230 #End of turn on red backgound
-@(go) 10@(,)0
+@(go) 0@(,)-6
 @(direction) 0
-@(print) "Turn is over, mark your result! Next player!"
+@(print) "Turn is over, write your result down"
