@@ -8,6 +8,9 @@ kturtle-script-v1.0
 #Learning interactivity
 #===================================
 
+# dice.turtle
+# v. 1.0 
+
 #Playing Yahtzee (Kniffel) with virtual dices
 
 #Player starts program and rolls five dices. After it he has two attempts to reroll particular dices (from none to all five) to achieve a better combination of them.
