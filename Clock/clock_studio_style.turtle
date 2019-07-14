@@ -1,0 +1,79 @@
+kturtle-script-v1.0
+@(reset)
+
+@(canvassize) 300@(,)300
+
+@(spritehide)
+
+@(penup)
+
+$StartH=10
+$StartM=10
+
+@(learn) machstrich $Direction@(,) $Start@(,) $Length@(,) $Width@(,) $R@(,)$G@(,)$B {
+  @(center)
+  @(direction) $Direction
+  @(forward) $Start
+  @(penwidth) $Width
+  @(pencolor) $R@(,)$G@(,)$B
+  @(pendown)
+  @(forward) $Length
+  @(penup)
+}
+
+@(learn) machZiffernblatt {
+
+  @(for) $A=-90 @(to) 180 @(step) 90 {
+
+    machstrich $A@(,)    100@(,) 25@(,) 4@(,) 140@(,)140@(,)140
+
+    @(for) $B=$A+6 @(to) $A+24 @(step) 6 {
+      machstrich $B@(,)  104@(,) 12@(,) 1@(,) 160@(,)160@(,)160
+    }
+    machstrich $A+30@(,) 100@(,) 25@(,) 2@(,) 160@(,)160@(,)160
+
+    @(for) $B=$A+36 @(to) $A+54 @(step) 6 {
+      machstrich $B@(,)  104@(,) 12@(,) 1@(,) 160@(,)160@(,)160
+    }
+    machstrich $A+60@(,) 100@(,) 25@(,) 2@(,) 160@(,)160@(,)160
+
+    @(for) $B=$A+66 @(to) $A+84 @(step) 6 {
+      machstrich $B@(,)  104@(,) 12@(,) 1@(,) 160@(,)160@(,)160
+    }
+
+  }
+
+  #Uhrenmarke
+  @(go) 123@(,)180
+  @(direction) 0
+  @(pencolor) 20@(,)20@(,)20
+  @(print) "POLJOT"
+}
+
+@(while) @(true) {
+
+  #Stundenschleife
+  @(for) $Hour=$StartH @(to) 11 {
+
+    #Minutenschleife
+    @(for) $Min=$StartM @(to) 59 {
+      
+      @(clear)
+      machZiffernblatt
+
+      #Stundenzeiger
+      machstrich $Hour*30+$Min/2@(,) -5@(,) 70@(,) 8@(,) 140@(,)140@(,)140
+
+      #Minutenzeiger
+      machstrich $Min*6@(,) -10@(,) 110@(,) 4@(,) 90@(,)90@(,)90
+
+      #Sekundnzeiger und Secundenschleife
+      @(for) $Sec=0 @(to) 59 {
+        machstrich $Sec*6@(,) 104@(,) 12@(,) 1.5@(,) 255@(,) 0@(,) 0
+        @(wait) 1
+      }
+    }
+    $StartM = 0
+  }
+  $StartH = 0
+}
