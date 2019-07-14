@@ -1,12 +1,13 @@
 kturtle-script-v1.0
 #Learning project "Dice" with KTurtle
+
 #Learning subroutines, cascading subroutines, functions, cascading functions and advanced using of loops
 #Learning interactivity
 
 
-#Plaing Yahtzee with virtual dices
+#Playing Yahtzee with virtual dices
 
-#Player rolls five dices. After that he has two another attempts to reroll particular dices (from none to all five) to achieve a better combination of them.
+#Player rolls five dices. After it he has two another attempts to reroll particular dices (from none to all five) to achieve a better combination of them.
 
 #One player runs a program and attempts to achieve best possible result. When his turn is over, next player starts programm again.
 
@@ -137,7 +138,7 @@ kturtle-script-v1.0
   @(return) $Z
 }
 
-#This subroutine calculates new value for particular, given as argument, dice
+#This subroutine calculates new value for rerolled dice 
 @(learn) rerolldice $rrd {
   @(if) $rrd==1 {
     $D1 = integer @(random) 1@(,)6.999999
@@ -179,10 +180,10 @@ kturtle-script-v1.0
 
 #-------------------------
 
-# Next attempts realized in loop. $left represents, how many attempts left. You may change a number of given attempts here. Original rules gives 2 attempts
+# Next attempts realized in loop. $left represents, how many attempts left. Player has 2 attempts to achieve better combination
 @(for) $left=2 @(to) 1 @(step) -1 {
 
-# Wait a litle bit before asking, f.e. 5 sec after 1st attempt, 2 sec after 2nd.
+# Wait 5 sec after 1st attempt, 2 sec after 2nd, let player checks dices
   @(wait) $left*3-1
 
 #interaction
@@ -190,7 +191,9 @@ kturtle-script-v1.0
   @(if) $ReRoll == "" @(or) $ReRoll == 0 {
     @(break) # If given value is empty - then break the loop, this turn is over
   }
-# Calculating of dices to reroll. If given value is 153, then points on first, fifth and third dices have to be recalculated. Given value will be divided to 10*x in approaching steps and integer value will be taken. Unvalid values are ignored.
+#Now we calculate numbers of dices to reroll. We divide given number by 10000 and take integer of it, then by 1000, 100 and 10. Each time we adjust what to divide.
+
+#Calculating of dices to reroll. If given value is 153, then points on first, fifth and third dices have to be recalculated. Given value will be divided by 10*x in approaching steps and integer value will be taken. Unvalid values are ignored.
   $div=10000
   @(repeat) 5 {
     $ReRollDice = integer $ReRoll/$div
