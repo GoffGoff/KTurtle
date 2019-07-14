@@ -1,5 +1,5 @@
 # KTurtle
-KTurtle samples for education purposes
+KTurtle samples for education purposes. Oink oink
 
 KTurtle is an educational programming environment for turtle graphics. 
 KTurtle has a built-in programming language that is loosely based on the Logo programming language. 
