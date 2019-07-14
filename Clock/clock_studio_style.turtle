@@ -1,4 +1,26 @@
 kturtle-script-v1.0
+#Learning project "Clock" with KTurtle
+
+#KTurtle is an educational programming environment for turtle graphics. KTurtle has a built-in programming language that is loosely based on the Logo programming language. It includes some basic elements, like variables, loops, ifs, includes some functions like sin or mod, and commands to control the turtle. It does not support arrays. The KTurtle language and IDE are limited to teaching programming using turtle graphics, and is not intended for other applications. 
+
+#===================================
+#Learning  animation, loops, nested loops, subroutines, unorthodox approach
+#===================================
+
+# clock_studio_style.turtle
+# v. 1.0 
+
+# First keypoint is animation. Repeated canvas clearing and drawing a new shapes makes an illusion of animated object.
+
+#Main keypoint is nested loops (hours, minutes, seconds)
+
+#Another keypoint is using of subroutines. Use subroutines for universal tasks or just to improve readability.
+
+#This version "Studio style" difference from "Second hand" in complicity and smoothness. This version implements hour and minute hands, seconds are counted like on studio clock - just adding marks on outer border of clockface. Clock face need to be renewed once per minute and not every second, like in "Second hand". This version looks better and runs smoother even on slow machines.
+
+# "POLJOT" is a brand of Soviet/Russian wristwatches, produced since 1964 by the First Moscow Watch Factory. My mom worked there for decades. Poljot produced numerous historical watches, including the world's first space watch worn by Yuri Gagarin.
+
+
 @(reset)
 
 @(canvassize) 300@(,)300
@@ -10,7 +32,7 @@ kturtle-script-v1.0
 $StartH=10
 $StartM=10
 
-@(learn) machstrich $Direction@(,) $Start@(,) $Length@(,) $Width@(,) $R@(,)$G@(,)$B {
+@(learn) DrawLine $Direction@(,) $Start@(,) $Length@(,) $Width@(,) $R@(,)$G@(,)$B { #Subroutine draws a line with given parameters from canvas center. Variable names are self explaining.
   @(center)
   @(direction) $Direction
   @(forward) $Start
@@ -21,7 +43,7 @@ $StartM=10
   @(penup)
 }
 
-@(learn) machZiffernblatt {
+@(learn) MakeClockFace {
 
   @(for) $A=-90 @(to) 180 @(step) 90 {
 
