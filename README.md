@@ -1,7 +1,7 @@
 # KTurtle
 KTurtle samples for education purposes
 
-#KTurtle is an educational programming environment for turtle graphics. 
+KTurtle is an educational programming environment for turtle graphics. 
 KTurtle has a built-in programming language that is loosely based on the Logo programming language. 
 It includes some basic elements, like variables, loops, ifs, includes some functions like sin or mod, and commands to control the turtle. 
 It does not support arrays. 
