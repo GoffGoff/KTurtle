@@ -1,0 +1,210 @@
+kturtle-script-v1.0
+#Learning subroutines, cascading subroutines, functions, cascading functions and advanced using of loops
+#Learning interactivity
+
+
+#Plaing Yahtzee with virtual dices
+
+#Player rolls five dices. After that he has two another attempts to reroll particular dices (from none to all five) to achieve a better combination of them.
+
+#One player runs a program and attempts to achieve best possible result. When his turn is over, next player starts programm again.
+
+#Dice values are represented with variables from $D1 to $D5
+
+@(reset)
+@(canvassize) 500@(,)100
+@(spritehide)
+@(penwidth) 2
+
+
+# This subroutine draws set of five dices.
+@(learn) drawdices {
+  @(clear)
+  @(go) 50@(,)50
+  drawdice $D1 # (cascading subroutines)
+  @(go) 150@(,)50
+  drawdice $D2
+  @(go) 250@(,)50
+  drawdice $D3
+  @(go) 350@(,)50
+  drawdice $D4
+  @(go) 450@(,)50
+  drawdice $D5
+}
+
+#This subroutine draws one particular dice with points (given argument) 
+@(learn) drawdice $Z {
+  $X = @(getx)
+  $Y = @(gety)
+
+#Draw dice
+  @(goy) $Y-26.4
+  @(direction) 90
+  @(repeat) 4 {
+    @(forward) 20
+    @(repeat) 5 {
+      @(turnright) 18
+      @(forward) 2
+    }
+    @(forward) 20
+  }
+
+#Draw points on dice
+  @(if) $Z==1 {
+    @(go) $X@(,)$Y
+    drawcircle  # (cascading subroutines)
+    @(return)
+  }
+  @(if) $Z==2 {
+    @(go) $X-15@(,)$Y+15
+    drawcircle
+    @(go) $X+15@(,)$Y-15
+    drawcircle
+    @(return)
+  }
+  @(if) $Z==3 {
+    @(go) $X-15@(,)$Y+15
+    drawcircle
+    @(go) $X+15@(,)$Y-15
+    drawcircle
+    @(go) $X@(,)$Y
+    drawcircle
+    @(return)
+  }
+  @(if) $Z==4 {
+    @(go) $X+15@(,)$Y+15
+    drawcircle
+    @(go) $X+15@(,)$Y-15
+    drawcircle
+    @(go) $X-15@(,)$Y+15
+    drawcircle
+    @(go) $X-15@(,)$Y-15
+    drawcircle
+    @(return)
+  }
+  @(if) $Z==5 {
+    @(go) $X@(,)$Y
+    drawcircle
+    @(go) $X+15@(,)$Y+15
+    drawcircle
+    @(go) $X+15@(,)$Y-15
+    drawcircle
+    @(go) $X-15@(,)$Y+15
+    drawcircle
+    @(go) $X-15@(,)$Y-15
+    drawcircle
+    @(return)
+  }
+  @(if) $Z==6 {
+    @(go) $X+15@(,)$Y+15
+    drawcircle
+    @(go) $X+15@(,)$Y-15
+    drawcircle
+    @(go) $X-15@(,)$Y+15
+    drawcircle
+    @(go) $X-15@(,)$Y-15
+    drawcircle
+    @(go) $X+15@(,)$Y
+    drawcircle
+    @(go) $X-15@(,)$Y
+    drawcircle
+  }
+}
+
+#This subroutine draws one point on dice
+@(learn) drawcircle {
+  @(penup)
+  @(forward) 3
+  @(pendown)
+  @(turnright) 90
+  @(repeat) 10 {
+    @(turnright) 18
+    @(forward) 1.885
+    @(turnright) 18
+  }
+}
+
+#This function gives integer value back
+@(learn) integer $Z {
+  $Zr = @(round) $Z
+  @(if) $Z < $Zr {
+    $Z = $Zr-1
+    }
+    @(else) {
+      $Z = $Zr
+  }
+  @(return) $Z
+}
+
+#This subroutine calculates new value for particular, given as argument, dice
+@(learn) rerolldice $rrd {
+  @(if) $rrd==1 {
+    $D1 = integer @(random) 1@(,)6.999999
+    @(return)
+  }
+  @(if) $rrd==2 {
+    $D2 = integer @(random) 1@(,)6.999999
+    @(return)
+  }
+  @(if) $rrd==3 {
+    $D3 = integer @(random) 1@(,)6.999999
+    @(return)
+  }
+  @(if) $rrd==4 {
+    $D4 = integer @(random) 1@(,)6.999999
+    @(return)
+  }
+  @(if) $rrd==5 {
+    $D5 = integer @(random) 1@(,)6.999999
+    @(return)
+  }
+}
+
+
+
+#And here we go :-)
+#-------------------------
+
+#Initial calculation of a first roll attempt for a set of dices. Cascading functions.
+  $D1 = integer @(random) 1@(,)6.999999
+  $D2 = integer @(random) 1@(,)6.999999
+  $D3 = integer @(random) 1@(,)6.999999
+  $D4 = integer @(random) 1@(,)6.999999
+  $D5 = integer @(random) 1@(,)6.999999
+
+  @(canvascolor) 230@(,)255@(,)230 #First attempt on green background
+
+  drawdices 
+
+#-------------------------
+
+# Next attempts realized in loop. $left represents, how many attempts left. You may change a number of given attempts here. Original rules gives 2 attempts
+@(for) $left=2 @(to) 1 @(step) -1 {
+
+# Wait a litle bit before asking, f.e. 5 sec after 1st attempt, 2 sec after 2nd.
+  @(wait) $left*3-1
+
+#interaction
+  $ReRoll = @(ask) "Wich dices you like to reroll? (give just numbers, f.e. 253 rerolls second, fifth and third dices. If you like to stay with actual set, just give 0 or close this popup window)"
+  @(if) $ReRoll == "" @(or) $ReRoll == 0 {
+    @(break) # If given value is empty - then break the loop, this turn is over
+  }
+# Calculating of dices to reroll. If given value is 153, then points on first, fifth and third dices have to be recalculated. Given value will be divided to 10*x in approaching steps and integer value will be taken. Unvalid values are ignored.
+  $div=10000
+  @(repeat) 5 {
+    $ReRollDice = integer $ReRoll/$div
+    @(if) $ReRollDice > 0 @(and) $ReRollDice <= 5 { 
+      rerolldice $ReRollDice
+    }
+    $ReRoll=$ReRoll-$ReRollDice*$div
+    $div=$div/10
+  }
+  @(canvascolor) 255@(,)255@(,)230 #yellow background
+
+  drawdices
+
+}
+@(canvascolor) 255@(,)230@(,)230 #End of turn on red backgound
+@(go) 10@(,)0
+@(direction) 0
+@(print) "Turn is over, mark your result! Next player!"
