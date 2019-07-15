@@ -11,8 +11,8 @@ Here are some projects i've done with my doughter to bring her some basics in pr
 
 To run this samples you need to download files with .turtle extension, open it in KTurtle and run with maximal speed.
 
+"Clock" is as set of working, animated clocks. Looks nice)) Learning points: loops, nested loops, subroutines, animation. And unorthodox approach to unusual tasks. Read Clock/README.md
+
 "Dice" is a virtual tool to play Yahtzee (in Germany - Kniffel, in Russia - покер на костях, Tali in GNOME Games). It just simulates a set of 5 dices and lets a player to roll and reroll dices. Learning points: subroutines, functions, user interaction.
 
-"Clock" is as set of working, animated clocks. Looks nice)) Learning points: animation, loops, nested loops, subroutines. And unorthodox approach generally.
-
-"Snake" is an animated couple of snakes (or worms) moving randomly around and playing with each other. Learning points: unorthodox approach, animation, physical modelling, AI. Read Snake/README.md
+"Snake" is an animated couple of snakes (or worms) moving randomly around and playing with each other. Learning points: approach, animation, physical modelling, AI. Read Snake/README.md
