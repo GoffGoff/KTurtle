@@ -4,8 +4,8 @@ kturtle-script-v1.0
 #KTurtle is an educational programming environment for turtle graphics. KTurtle has a built-in programming language that is loosely based on the Logo programming language. It includes some basic elements, like variables, loops, ifs, includes some functions like sin or mod, and commands to control the turtle. It does not support arrays. The KTurtle language and IDE are limited to teaching programming using turtle graphics, and is not intended for other applications. 
 
 #===================================
-#Learning subroutines, cascading subroutines, functions, cascading functions and advanced using of loops
-#Learning interactivity
+#Learning cascading of subroutines and functions.
+#Learning interactivity and validating user's input
 #===================================
 
 # dice.turtle
@@ -17,7 +17,7 @@ kturtle-script-v1.0
 
 #To reroll particular dices player gives a number, where each digit represents a dice to reroll. "253" means to reroll dices 2, 5 and 3.
 
-#Player runs a program and attempts to achieve best possible result. When his turn is over, next player starts programm.
+#Player runs a program and attempts to achieve best possible result. When his turn is over, next player starts programm again.
 
 #Dice values are stored in variables from $D1 to $D5
 
@@ -26,9 +26,7 @@ kturtle-script-v1.0
 @(spritehide)
 @(penwidth) 2
 
-#In KTurtle subs and functions has to be put first, before main
-
-@(learn) drawdices { # This subroutine draws a set of all five dices.
+@(learn) drawdices { # This subroutine draws a set of all five dices. It uses cascaded subroutine "drawdice" to draw every single dice
   @(clear)
   @(go) 50@(,)50
   drawdice $D1
@@ -42,7 +40,7 @@ kturtle-script-v1.0
   drawdice $D5
 }
 
-@(learn) drawdice $Z { #This subroutine draws one particular dice with value $Z
+@(learn) drawdice $Z { #This subroutine draws one single dice with given value $Z, uses cascaded subroutine to draw single point mark (small circle)
   $X = @(getx)
   $Y = @(gety)
 
@@ -132,7 +130,7 @@ kturtle-script-v1.0
   }
 }
 
-@(learn) integer $Z { #This function gives integer value back. KTurtle has integrated function "round" and we use it to calc integer
+@(learn) integer $Z { #This function gives an integer back. KTurtle has integrated function "round" and we use it to calc integer. Cascading functions.
   $Zi = @(round) $Z
   @(if) $Z < $Zi {
     $Zi = $Zi-1
@@ -140,7 +138,7 @@ kturtle-script-v1.0
   @(return) $Zi
 }
 
-@(learn) rerolldice $rrd { #This subroutine calculates new value for rerolled dice
+@(learn) rerolldice $rrd { #This subroutine calculates new value for given dice
   @(if) $rrd==1 {
     $D1 = integer @(random) 1@(,)6.999999
     @(return)
@@ -175,6 +173,7 @@ kturtle-script-v1.0
   $D5 = integer @(random) 1@(,)6.999999
 
   @(canvascolor) 230@(,)255@(,)230 #First attempt on green background
+
   drawdices 
 
 # Player has 2 attempts to achieve better combination. Loop runs twice.
@@ -183,22 +182,26 @@ kturtle-script-v1.0
 # Let player checks dices, wait 5 sec after 1st attempt, 2 sec after 2nd
   @(wait) $AttemptsLeft*3-1
 
-#interaction. !!!There is a bug in KTurtle at the moment, message appears at wrong place!!!
-  $ReRoll = @(ask) "Wich dices you like to reroll? (give just numbers, f.e. 253 rerolls second, fifth and third dices. If you like to stay with actual set, just give 0 or close this popup window)"
+#interaction. !!!There is a bug in KTurtle at the moment, instruction message appears at wrong place!!!
+#  $ReRoll = ask "Wich dices you like to reroll? (give just numbers, f.e. 253 rerolls second, fifth and third dices. If you like to stay with actual set, just give 0 or close this popup window)"
 
-  @(if) $ReRoll == "" @(or) $ReRoll <= 0 @(or) $ReRoll > 54321 { # If input is empty or invalid - break the loop, turn is over
+# Workaround - asking for input without instruction message
+  $ReRoll = @(ask) ""
+
+  @(if) $ReRoll == "" @(or) $ReRoll <= 0 @(or) $ReRoll > 54321 { # We proof user's input. If input is empty or invalid - break the loop, turn is over
     @(break) 
   }
 
-  $ReRoll = integer $ReRoll # If not integer is given
+  $ReRoll = integer $ReRoll # We proof user's input. If not integer is given we cut it
 
-#Now we reroll dices, extracting digits from given number
+#Now we reroll dices, extracting digits from given number.
   @(while) $ReRoll > 0 {
     rerolldice @(mod) $ReRoll@(,)10
     $ReRoll =  integer $ReRoll/10
   }
 
-  @(canvascolor) 255@(,)255@(,)230 #yellow background
+  @(canvascolor) 255@(,)255@(,)230 #yellow background for last attempt
+
   drawdices
 
 }

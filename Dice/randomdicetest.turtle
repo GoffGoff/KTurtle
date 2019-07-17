@@ -1,0 +1,64 @@
+kturtle-script-v1.0
+# Just to test how random is function "random"
+
+# Test result - it delivers acceptable for dice game random values
+
+@(reset)
+@(spritehide)
+@(go) -100@(,)10
+
+$N=10000
+
+$SumDev = 0
+
+@(learn) integer $Z { 
+  $Zi = @(round) $Z
+  @(if) $Z < $Zi {
+    $Zi = $Zi-1
+  }
+  @(return) $Zi
+}
+
+@(for) $Count = 1 @(to) 20 {
+  $S=0
+  $S1=0
+  $S2=0
+  $S3=0
+  $S4=0
+  $S5=0
+  $S6=0
+  $space=""
+  @(repeat) $N {
+    $D=@(random) 1@(,)6.999999999
+    $D=integer $D
+    @(if) $D==1 {
+      $S1=$S1+1
+    }
+    @(if) $D==2 {
+      $S2=$S2+1
+    }
+    @(if) $D==3 {
+      $S3=$S3+1
+    }
+    @(if) $D==4 {
+      $S4=$S4+1
+    }
+    @(if) $D==5 {
+      $S5=$S5+1
+    }
+    @(if) $D==6 {
+      $S6=$S6+1
+    }
+  
+    $S=$S+$D
+  }
+  $A=$S/$N
+  $D=3.5-$A
+  @(if) $D>=0 {
+    $space=" "
+  }
+  $SumDev = $SumDev + $D
+  @(print) $Count+":    "+$A+" откл. "+$space+$D+"   1х:"+$S1+" 2х:"+$S2+" 3х:"+$S3+" 4х:"+$S4+" 5х:"+$S5+" 6х:"+$S6+" общ. откл.    "+$SumDev
+  @(backward) 19
+}
+
