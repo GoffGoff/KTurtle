@@ -10,31 +10,29 @@ kturtle-script-v1.0
 # clock_studio_style.turtle
 # v. 1.0 
 
+# Animated clock, see clock_first_stage and clock_second_hand first
+
 #Run sample with maximal speed
 
-# First keypoint of this learning project is animation and unorthodox approach to unusual goals. Repeated canvas clearing and drawing a new shapes makes an illusion of animated object. Animated projects are unusual for KTurtle.
+# First keypoint of this learning project is animation. Repeated canvas clearing and drawing a new shapes makes an illusion of animated object. 
 
-# But main keypoint is nested loops (hours, minutes, seconds)
+# Main keypoint is nested loops (hours, minutes, seconds)
 
 # Another keypoint is subroutines. Subroutines used for 1. universal tasks or 2. to improve readability of main routine.
 
-#This version "Studio style" difference from "Second hand" in complicity and smoothness. This version implements hour and minute hands, seconds are counted like on studio clock - just adding marks on outer border of clockface. Clock face need to be renewed once per minute and not every second, like in "Second hand". This version looks better and runs smoother even on slow machines.
+#This version "Studio style" difference from "Second hand" in complicity and smoothness. This version implements hour and minute hands, seconds are counted like on studio clock - just adding marks on outer border of clockface. Clock face need to be renewed only once per minute and not every second, like in "Second hand". This version looks better and runs smoother even on slow machines.
 
 # "POLJOT" is a brand of Soviet/Russian wristwatches, produced since 1964 by the First Moscow Watch Factory. My mom worked there for decades. Poljot produced numerous historical watches, including the world's first space watch worn by Yuri Gagarin.
 
-
 @(reset)
-
 @(canvassize) 300@(,)300
-
 @(spritehide)
-
 @(penup)
 
 $StartH=10 # Initial position, hours
 $StartM=10 # Initial position, minutes
 
-@(learn) DrawLine $Direction@(,) $Start@(,) $Length@(,) $Width@(,) $R@(,)$G@(,)$B { #Subroutine draws a line from canvas center with given parameters. Universal subroutine. Variable names are self explaining, RGB are for color.
+@(learn) DrawLine $Direction@(,) $Start@(,) $Length@(,) $Width@(,) $R@(,)$G@(,)$B { #Subroutine draws a line from canvas center with given parameters. Universal subroutine. Variable names are self explaining, RGBs are for color.
   @(center)
   @(direction) $Direction
   @(forward) $Start
@@ -48,23 +46,18 @@ $StartM=10 # Initial position, minutes
 @(learn) MakeClockFace { # subroutine to improve readability of main. Trimmed for performance.
 
   @(for) $A=-90 @(to) 180 @(step) 90 {
-
     DrawLine $A@(,)    100@(,) 25@(,) 4@(,) 140@(,)140@(,)140 # Strokes fo 9, 12, 3 and 6 hours (1/4)
-
     @(for) $B=$A+6 @(to) $A+24 @(step) 6 {
       DrawLine $B@(,)  104@(,) 12@(,) 1@(,) 160@(,)160@(,)160 # Strokes for minutes (1/60)
     }
     DrawLine $A+30@(,) 100@(,) 25@(,) 2@(,) 160@(,)160@(,)160 # Strokes for hours (1/12)
-
     @(for) $B=$A+36 @(to) $A+54 @(step) 6 {
       DrawLine $B@(,)  104@(,) 12@(,) 1@(,) 160@(,)160@(,)160
     }
     DrawLine $A+60@(,) 100@(,) 25@(,) 2@(,) 160@(,)160@(,)160
-
     @(for) $B=$A+66 @(to) $A+84 @(step) 6 {
       DrawLine $B@(,)  104@(,) 12@(,) 1@(,) 160@(,)160@(,)160
     }
-
   }
 
   # POLJOT trade mark
@@ -80,22 +73,22 @@ $StartM=10 # Initial position, minutes
 
 @(while) @(true) {
 
-  #Hour loop
+  #Hour's loop
   @(for) $Hour=$StartH @(to) 11 {
 
-    #Minute loop
+    #Minute's loop
     @(for) $Min=$StartM @(to) 59 {
       
-      @(clear) # clearing canvas and drawing clock face and hands
+      @(clear) # clearing canvas and drawing clock face
       MakeClockFace
 
-      #Hour hand, see how it's direction is calculated
+      #Hour hand
       DrawLine $Hour*30+$Min/2@(,) -5@(,) 70@(,) 8@(,) 140@(,)140@(,)140
 
       #Minute hand
       DrawLine $Min*6@(,) -10@(,) 110@(,) 4@(,) 90@(,)90@(,)90
 
-      #Second loop and second mark
+      #Second's loop
       @(for) $Sec=0 @(to) 59 {
         DrawLine $Sec*6@(,) 104@(,) 12@(,) 1.5@(,) 255@(,) 0@(,) 0
         @(wait) 0.99999 # wait 0.99999 sec for precise run :)
