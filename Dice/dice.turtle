@@ -130,7 +130,7 @@ kturtle-script-v1.0
   }
 }
 
-@(learn) integer $Z { #This function gives an integer back. KTurtle has integrated function "round" and we use it to calc integer. Cascading functions.
+@(learn) integer $Z { #This function gives an integer back. KTurtle has integrated function "round" and we use it to calc integer. 
   $Zi = @(round) $Z
   @(if) $Z < $Zi {
     $Zi = $Zi-1
