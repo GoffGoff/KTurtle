@@ -4,19 +4,19 @@ kturtle-script-v1.0
 #KTurtle is an educational programming environment for turtle graphics. KTurtle has a built-in programming language that is loosely based on the Logo programming language. It includes some basic elements, like variables, loops, ifs, includes some functions like sin or mod, and commands to control the turtle. It does not support arrays. The KTurtle language and IDE are limited to teaching programming using turtle graphics, and is not intended for other applications. 
 
 #===================================
-#Learning animation, loops, nested loops, subroutines, unorthodox approach
+#Learning animation, loops, nested loops, subroutines
 #===================================
+
+# See clock_first_stage first. Now we let our clock to run, we animate it
 
 # clock_second_hand.turtle
 # v. 1.0 
 
-# See clock_first_stage first
-
-# First keypoint of this learning project is animation and unorthodox approach to unusual goals. Repeated canvas clearing and drawing a new shapes makes an illusion of animated object. 
+# First keypoint of this learning project is animation. Repeated canvas clearing and drawing a new shapes makes an illusion of animated object. 
 
 # Main keypoint is nested loops (hours, minutes, seconds)
 
-# Another keypoint is subroutines - see clock_first_stage. 
+# Another keypoint is subroutines - like in clock_first_stage. 
 
 #This version "Second hand" difference from "Studio style" in complicity and smoothness. This version implements hour, minute AND second hands. Clock face need to be renewed every second. This version runs not so smooth on slow machines.
 
@@ -26,17 +26,14 @@ kturtle-script-v1.0
 
 
 @(reset)
-
 @(canvassize) 300@(,)300
-
 @(spritehide)
-
 @(penup)
 
 $StartH=10 # Initial position, hours
 $StartM=10 # Initial position, minutes
 
-@(learn) DrawLine $Direction@(,) $Start@(,) $Length@(,) $Width@(,) $R@(,)$G@(,)$B { #Subroutine draws a line from canvas center with given parameters. Universal subroutine. Variable names are self explaining, RGBs are for color. 
+@(learn) DrawLine $Direction@(,) $Start@(,) $Length@(,) $Width@(,) $R@(,)$G@(,)$B { #Universal subroutine draws a line from canvas center with given parameters. Variable's names are self explaining, RGBs are for color. 
   @(center)
   @(direction) $Direction
   @(forward) $Start
@@ -70,10 +67,10 @@ $StartM=10 # Initial position, minutes
           DrawLine $A@(,) 100@(,) 20@(,) 3@(,) 30@(,)30@(,)30
         }
         
-        # Draw hour hand, see formel for direction
+        # Draw hour hand
         DrawLine $Hour*30+$Min/2@(,) -5@(,) 70@(,) 8@(,) 160@(,)160@(,)160
 
-        # Draw minute hand, see formel for direction
+        # Draw minute hand
         DrawLine $Min*6+$Sec/10@(,) -10@(,) 110@(,) 4@(,) 110@(,)110@(,)110
 
         #Draw second hand

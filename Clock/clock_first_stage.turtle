@@ -7,17 +7,14 @@ kturtle-script-v1.0
 #Learning subroutines and loops
 #===================================
 
+#Making a clock with face and hands
+
 # clock_first_stage.turtle
 # v. 1.0 
 
-# We learn here subroutines and loops. Both of them allow as to simplify similar, repeating tasks. With one single universal subroutine we realize the hole clock - with face and hands. Also we use loop for clock face. We learn difference between loop and subroutine.
-
 @(reset)
-
 @(canvassize) 300@(,)300
-
 @(spritehide)
-
 @(penup)
 
 $Hour=10 # hours
@@ -39,7 +36,7 @@ $Sec=27 # seconds
 
 # main
 
-# Make fast and simple clock face
+# Do a simple clock face
 @(for) $A=0 @(to) 330 @(step) 30 {
   DrawLine $A@(,) 100@(,) 20@(,) 3@(,) 30@(,)30@(,)30
 }

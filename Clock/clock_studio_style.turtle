@@ -10,9 +10,11 @@ kturtle-script-v1.0
 # clock_studio_style.turtle
 # v. 1.0 
 
+# Animated clock, see clock_first_stage and clock_second_hand first
+
 #Run sample with maximal speed
 
-# First keypoint of this learning project is animation and unorthodox approach to unusual goals. Repeated canvas clearing and drawing a new shapes makes an illusion of animated object. Animated objects are unusual for KTurtle.
+# First keypoint of this learning project is animation. Repeated canvas clearing and drawing a new shapes makes an illusion of animated object. 
 
 # Main keypoint is nested loops (hours, minutes, seconds)
 
@@ -71,22 +73,22 @@ $StartM=10 # Initial position, minutes
 
 @(while) @(true) {
 
-  #Hour loop
+  #Hour's loop
   @(for) $Hour=$StartH @(to) 11 {
 
-    #Minute loop
+    #Minute's loop
     @(for) $Min=$StartM @(to) 59 {
       
       @(clear) # clearing canvas and drawing clock face
       MakeClockFace
 
-      #Hour hand, direction is calculated
+      #Hour hand
       DrawLine $Hour*30+$Min/2@(,) -5@(,) 70@(,) 8@(,) 140@(,)140@(,)140
 
       #Minute hand
       DrawLine $Min*6@(,) -10@(,) 110@(,) 4@(,) 90@(,)90@(,)90
 
-      #Second's mark
+      #Second's loop
       @(for) $Sec=0 @(to) 59 {
         DrawLine $Sec*6@(,) 104@(,) 12@(,) 1.5@(,) 255@(,) 0@(,) 0
         @(wait) 0.99999 # wait 0.99999 sec for precise run :)
